@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@14.0.0/dist/lazyload.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>VAMStack Face Recognition Results</title>
+
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="web_styte/AdminLTE/plugins/fontawesome-free/css/all.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="web_styte/AdminLTE/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="web_styte/AdminLTE/dist/css/adminlte.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+
+
+    <style>
+      table, td {
+          border: 1px solid black;
+          table-layout: fixed;
+          width: 60%;
+      }
+
+      input[type=checkbox]
+      {
+        /* Double-sized Checkboxes */
+        -ms-transform: scale(2); /* IE */
+        -moz-transform: scale(2); /* FF */
+        -webkit-transform: scale(2); /* Safari and Chrome */
+        -o-transform: scale(2); /* Opera */
+        transform: scale(2);
+        padding: 10px;
+      }
+
+      /* Might want to wrap a span around your checkbox text */
+      .checkboxtext
+      {
+        /* Checkbox text */
+        font-size: 110%;
+        display: inline;
+      }
+
+      .yellow {
+        background-color: #00FF00;
+      }
+
+      header {
+        background-color: #666;
+        padding: 30px;
+        text-align: center;
+        font-size: 35px;
+        color: white;
+      }
+
+    </style>
+
+
+
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed"> 
+
+  <!-- Header -->
+  <header>
+    <center><h1>Face Recognition Results</h1></center>
+  </header>
+  <!-- End Header -->
+
+
+
+<!-- Section DIsplay ICON -->
+<section class="content">
+  <div class="container-fluid">
+  
+    <!-- Info boxes -->
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-2">
+        <div class="info-box">
+          <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+          <div class="info-box-content">
+            <b><span class="info-box-text">RECOGNITION</span></b>
+            <span class="info-box-number">
+              
+              <h2 id="recog">0</h2>
+
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+
+      <!-- /.col -->
+      <div class="col-12 col-sm-6 col-md-2">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+
+          <div class="info-box-content">
+            <b><span class="info-box-text">TRUE</span></b>
+            <span class="info-box-number">
+              <h2 id="true_data">0</h2>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+
+      <div class="col-12 col-sm-6 col-md-2">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+          <div class="info-box-content">
+            <b><span class="info-box-text">FALSE</span></b>
+            <span class="info-box-number">
+              <h2 id="false_data">0</h2>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+
+
+      <div class="col-12 col-sm-6 col-md-2">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+          <div class="info-box-content">
+            <b><span class="info-box-text">ACCURACY</span></b>
+            <span class="info-box-number">
+              <h2 id="acc_data">0 <small>%</small></h2>
+              
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+
+      <div class="col-12 col-sm-6 col-md-2">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+          <div class="info-box-content">
+            <b><span class="info-box-text">MEMBER</span></b>
+            <span class="info-box-number">
+              <h2 id="member_count"></h2>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+
+
+
+      <!-- Row -->
+    </div>
+  
+  </div>
+</section>
+
+
+<!-- Section Input Data -->
+
+<section class="content">
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+
+          <div class="info-box-content mb-3">
+            <span class="info-box-text"><b>Start</b></span>
+            <span class="info-box-number">
+              <input type="text" id="start_range" value="0"/>
+            </span>
+          </div>
+
+          <div class="info-box-content mb-3">
+            <span class="info-box-text"><b>Stop</b></span>
+            <span class="info-box-number">
+              <input type="text" id="stop_range" value="0"/>
+            </span>
+          </div>
+
+          <div class="info-box-content mb-3">
+            <span class="info-box-text"><b>Confident</b></span>
+            <span class="info-box-number">
+              <input type="text" id="confident_v" value="80"/>
+            </span>
+          </div>
+
+          <div class="info-box-content mb-3">
+            <span class="info-box-text"><b>Num-Candidate</b></span>
+            <span class="info-box-number">
+              <input type="text" id="candidate_data" value="1"/>
+            </span>
+          </div>
+
+
+          <div class="info-box-content mb-3">
+            <span class="info-box-text"><b>Total Record</b></span>
+            <span class="info-box-number">
+              <h3 id="total_record"></h2>
+            </span>
+          </div>
+
+          <input type="button" onclick="incrementValue()" value="Search" class="btn btn-info"/>
+          &nbsp;&nbsp;&nbsp;
+          <input type="button" onclick="myFunction()" value="Clear"  class="btn btn-info"/>
+          &nbsp;&nbsp;&nbsp;
+          <button onclick="window.print('asb.Pdf')" class="btn btn-info" >Export to PDF</button>
+
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+
+      <!-- div row -->
+    </div >
+
+  </div>
+</section>
+
+
+<!----------------------------- Main Table --------------------------->
+  <center><table id="myTable">
+  </table><br></center>
+
+
+  <script type="text/javascript">
+    var data = [{"portrait": "f_27", "portrait_file": "f_27.jpg", "portrait_linkfile": "f_27.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 35.65}, {"member_id": "pnok", "score": 2.8}]}, {"portrait": "f_82", "portrait_file": "f_82.jpg", "portrait_linkfile": "f_82.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 31.57}, {"member_id": "ptoon", "score": 3.88}]}, {"portrait": "f_53", "portrait_file": "f_53.jpg", "portrait_linkfile": "f_53.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 83.73}, {"member_id": "ptoon", "score": 4.71}]}, {"portrait": "f_35", "portrait_file": "f_35.jpg", "portrait_linkfile": "f_35.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 34.1}, {"member_id": "tee", "score": 6.3}]}, {"portrait": "f_50", "portrait_file": "f_50.jpg", "portrait_linkfile": "f_50.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 7.35}, {"member_id": "ptoon", "score": 7.07}]}, {"portrait": "f_48", "portrait_file": "f_48.jpg", "portrait_linkfile": "f_48.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 10.42}, {"member_id": "ptoon", "score": 6.34}]}, {"portrait": "f_28", "portrait_file": "f_28.jpg", "portrait_linkfile": "f_28.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 10.01}, {"member_id": "pnok", "score": 4.71}]}, {"portrait": "f_89", "portrait_file": "f_89.jpg", "portrait_linkfile": "f_89.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 10.87}, {"member_id": "ptoon", "score": 4.45}]}, {"portrait": "f_86", "portrait_file": "f_86.jpg", "portrait_linkfile": "f_86.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 55.56}, {"member_id": "pnok", "score": 3.78}]}, {"portrait": "f_74", "portrait_file": "f_74.jpg", "portrait_linkfile": "f_74.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 16.42}, {"member_id": "ptoon", "score": 8.71}]}, {"portrait": "f_36", "portrait_file": "f_36.jpg", "portrait_linkfile": "f_36.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 16.44}, {"member_id": "tee", "score": 7.54}]}, {"portrait": "f_32", "portrait_file": "f_32.jpg", "portrait_linkfile": "f_32.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 12.72}, {"member_id": "tee", "score": 5.68}]}, {"portrait": "f_22", "portrait_file": "f_22.jpg", "portrait_linkfile": "f_22.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 10.59}, {"member_id": "pnok", "score": 3.95}]}, {"portrait": "f_7", "portrait_file": "f_7.jpg", "portrait_linkfile": "f_7.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 9.62}, {"member_id": "pnok", "score": 3.15}]}, {"portrait": "f_43", "portrait_file": "f_43.jpg", "portrait_linkfile": "f_43.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 6.46}, {"member_id": "pnok", "score": 1.76}]}, {"portrait": "f_64", "portrait_file": "f_64.jpg", "portrait_linkfile": "f_64.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 11.49}, {"member_id": "ptoon", "score": 6.96}]}, {"portrait": "f_83", "portrait_file": "f_83.jpg", "portrait_linkfile": "f_83.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 14.48}, {"member_id": "ptoon", "score": 13.07}]}, {"portrait": "f_17", "portrait_file": "f_17.jpg", "portrait_linkfile": "f_17.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 4.75}, {"member_id": "ptoon", "score": 4.3}]}, {"portrait": "f_5", "portrait_file": "f_5.jpg", "portrait_linkfile": "f_5.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 35.77}, {"member_id": "ptoon", "score": 5.8}]}, {"portrait": "f_91", "portrait_file": "f_91.jpg", "portrait_linkfile": "f_91.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 11.92}, {"member_id": "ptoon", "score": 2.32}]}, {"portrait": "f_52", "portrait_file": "f_52.jpg", "portrait_linkfile": "f_52.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 6.88}, {"member_id": "pnok", "score": 4.12}]}, {"portrait": "f_30", "portrait_file": "f_30.jpg", "portrait_linkfile": "f_30.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 19.48}, {"member_id": "pnok", "score": 12.33}]}, {"portrait": "f_0", "portrait_file": "f_0.jpg", "portrait_linkfile": "f_0.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 12.91}, {"member_id": "tee", "score": 7.01}]}, {"portrait": "f_19", "portrait_file": "f_19.jpg", "portrait_linkfile": "f_19.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 32.81}, {"member_id": "pnok", "score": 8.0}]}, {"portrait": "f_29", "portrait_file": "f_29.jpg", "portrait_linkfile": "f_29.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 56.89}, {"member_id": "ptoon", "score": 2.97}]}, {"portrait": "f_79", "portrait_file": "f_79.jpg", "portrait_linkfile": "f_79.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "pnok", "score": 18.98}, {"member_id": "tee", "score": 7.47}]}, {"portrait": "f_51", "portrait_file": "f_51.jpg", "portrait_linkfile": "f_51.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "pnok", "score": 12.86}, {"member_id": "ptoon", "score": 3.45}]}, {"portrait": "f_21", "portrait_file": "f_21.jpg", "portrait_linkfile": "f_21.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 6.51}, {"member_id": "pnok", "score": 2.92}]}, {"portrait": "f_44", "portrait_file": "f_44.jpg", "portrait_linkfile": "f_44.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 9.45}, {"member_id": "pnok", "score": 5.88}]}, {"portrait": "f_54", "portrait_file": "f_54.jpg", "portrait_linkfile": "f_54.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 10.28}, {"member_id": "pnok", "score": 6.82}]}, {"portrait": "f_62", "portrait_file": "f_62.jpg", "portrait_linkfile": "f_62.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "pnok", "score": 8.12}, {"member_id": "ptoon", "score": 7.81}]}, {"portrait": "f_92", "portrait_file": "f_92.jpg", "portrait_linkfile": "f_92.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 22.6}, {"member_id": "ptoon", "score": 3.58}]}, {"portrait": "f_73", "portrait_file": "f_73.jpg", "portrait_linkfile": "f_73.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 11.72}, {"member_id": "pnok", "score": 6.52}]}, {"portrait": "f_24", "portrait_file": "f_24.jpg", "portrait_linkfile": "f_24.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 19.78}, {"member_id": "ptoon", "score": 7.18}]}, {"portrait": "f_9", "portrait_file": "f_9.jpg", "portrait_linkfile": "f_9.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 13.39}, {"member_id": "tee", "score": 7.78}]}, {"portrait": "f_25", "portrait_file": "f_25.jpg", "portrait_linkfile": "f_25.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 9.68}, {"member_id": "ptoon", "score": 4.09}]}, {"portrait": "f_49", "portrait_file": "f_49.jpg", "portrait_linkfile": "f_49.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "pnok", "score": 12.11}, {"member_id": "ptoon", "score": 4.61}]}, {"portrait": "f_72", "portrait_file": "f_72.jpg", "portrait_linkfile": "f_72.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 17.77}, {"member_id": "ptoon", "score": 9.17}]}, {"portrait": "f_20", "portrait_file": "f_20.jpg", "portrait_linkfile": "f_20.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 9.71}, {"member_id": "ptoon", "score": 5.36}]}, {"portrait": "f_23", "portrait_file": "f_23.jpg", "portrait_linkfile": "f_23.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "pnok", "score": 17.82}, {"member_id": "tee", "score": 3.46}]}, {"portrait": "f_63", "portrait_file": "f_63.jpg", "portrait_linkfile": "f_63.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 7.29}, {"member_id": "ptoon", "score": 4.64}]}, {"portrait": "f_87", "portrait_file": "f_87.jpg", "portrait_linkfile": "f_87.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 34.55}, {"member_id": "pnok", "score": 3.39}]}, {"portrait": "f_58", "portrait_file": "f_58.jpg", "portrait_linkfile": "f_58.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 20.73}, {"member_id": "tee", "score": 7.81}]}, {"portrait": "f_26", "portrait_file": "f_26.jpg", "portrait_linkfile": "f_26.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 23.13}, {"member_id": "ptoon", "score": 9.77}]}, {"portrait": "f_61", "portrait_file": "f_61.jpg", "portrait_linkfile": "f_61.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 6.61}, {"member_id": "tee", "score": 4.68}]}, {"portrait": "f_57", "portrait_file": "f_57.jpg", "portrait_linkfile": "f_57.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 19.21}, {"member_id": "ptoon", "score": 8.39}]}, {"portrait": "f_55", "portrait_file": "f_55.jpg", "portrait_linkfile": "f_55.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 17.38}, {"member_id": "ptoon", "score": 5.74}]}, {"portrait": "f_46", "portrait_file": "f_46.jpg", "portrait_linkfile": "f_46.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 8.97}, {"member_id": "ptoon", "score": 3.15}]}, {"portrait": "f_37", "portrait_file": "f_37.jpg", "portrait_linkfile": "f_37.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 8.55}, {"member_id": "pnok", "score": 3.65}]}, {"portrait": "f_71", "portrait_file": "f_71.jpg", "portrait_linkfile": "f_71.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 6.24}, {"member_id": "pnok", "score": 5.33}]}, {"portrait": "f_56", "portrait_file": "f_56.jpg", "portrait_linkfile": "f_56.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 9.56}, {"member_id": "tee", "score": 6.31}]}, {"portrait": "f_90", "portrait_file": "f_90.jpg", "portrait_linkfile": "f_90.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 7.51}, {"member_id": "pnok", "score": 5.27}]}, {"portrait": "f_31", "portrait_file": "f_31.jpg", "portrait_linkfile": "f_31.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 71.16}, {"member_id": "ptoon", "score": 1.62}]}, {"portrait": "f_34", "portrait_file": "f_34.jpg", "portrait_linkfile": "f_34.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "pnok", "score": 8.23}, {"member_id": "tee", "score": 3.69}]}, {"portrait": "f_8", "portrait_file": "f_8.jpg", "portrait_linkfile": "f_8.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 22.47}, {"member_id": "ptoon", "score": 4.91}]}, {"portrait": "f_59", "portrait_file": "f_59.jpg", "portrait_linkfile": "f_59.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 9.16}, {"member_id": "ptoon", "score": 3.37}]}, {"portrait": "f_33", "portrait_file": "f_33.jpg", "portrait_linkfile": "f_33.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 11.73}, {"member_id": "tee", "score": 4.74}]}, {"portrait": "f_42", "portrait_file": "f_42.jpg", "portrait_linkfile": "f_42.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 9.63}, {"member_id": "ptoon", "score": 7.58}]}, {"portrait": "f_88", "portrait_file": "f_88.jpg", "portrait_linkfile": "f_88.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 38.93}, {"member_id": "pnok", "score": 5.31}]}, {"portrait": "f_10", "portrait_file": "f_10.jpg", "portrait_linkfile": "f_10.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 7.92}, {"member_id": "tee", "score": 3.52}]}, {"portrait": "f_41", "portrait_file": "f_41.jpg", "portrait_linkfile": "f_41.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "pnok", "score": 4.0}, {"member_id": "tee", "score": 3.27}]}, {"portrait": "f_47", "portrait_file": "f_47.jpg", "portrait_linkfile": "f_47.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 9.1}, {"member_id": "pnok", "score": 4.39}]}, {"portrait": "f_60", "portrait_file": "f_60.jpg", "portrait_linkfile": "f_60.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "ptoon", "score": 8.16}, {"member_id": "tee", "score": 6.28}]}, {"portrait": "f_45", "portrait_file": "f_45.jpg", "portrait_linkfile": "f_45.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 18.33}, {"member_id": "ptoon", "score": 7.18}]}, {"portrait": "f_81", "portrait_file": "f_81.jpg", "portrait_linkfile": "f_81.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 28.39}, {"member_id": "ptoon", "score": 6.97}]}, {"portrait": "f_18", "portrait_file": "f_18.jpg", "portrait_linkfile": "f_18.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 12.34}, {"member_id": "ptoon", "score": 8.61}]}, {"portrait": "f_70", "portrait_file": "f_70.jpg", "portrait_linkfile": "f_70.jpg", "date_time": "15-02-2020", "c_member": "3", "candidate": [{"member_id": "tee", "score": 11.62}, {"member_id": "pnok", "score": 5.47}]}];
+    var count = 0;
+    var summary = 0;
+    var t_count = 0;
+    var f_count = 0;
+    var len_data = data.length;
+    var start=0;
+    var stop=0;
+    var dis_found = 0;
+
+
+    // document.getElementById("detect").value = data.length;
+    document.getElementById("total_record").innerHTML = data.length;
+    // document.getElementById("date1").value = data[0].date_time;
+    document.getElementById("member_count").innerHTML = data[0].c_member;
+
+    function incrementValue()
+    {
+        var value = parseInt(document.getElementById('start_range').value);
+        value = isNaN(value) ? 0 : value;
+        var value2 = parseInt(document.getElementById('stop_range').value);
+        value2 = isNaN(value2) ? 0 : value2;
+        var confid = parseInt(document.getElementById('confident_v').value);
+        confid = isNaN(confid) ? 0 : confid;
+        var num_candi =  parseInt(document.getElementById('candidate_data').value);
+        num_candidate = isNaN(num_candi) ? 1 : num_candi;
+
+    // for(var item of data){
+      for(var item = value; item<data.length && item < value2; item++){
+        
+            var score_mem = `${data[item].candidate[0].score}`
+            if(score_mem < confid){
+              continue;
+            }
+
+            // Member id
+            var tag_check = '<center><input type="checkbox" id="box" name="employee" /><span class="checkboxtext">  True </span></center> &nbsp; <center><input type="checkbox" id="box" name="false" /><span class="checkboxtext">  False </span></center>'
+            // var crop_img = `<center><img class="lazy" data-src="report/portrait/${item.portrait_linkfile}" alt="Italian Trulli" width=100px height=100px></img></center>` 
+            var crop_img = `<center><img class="lazy" data-src="report/portrait/${data[item].portrait_linkfile}" alt="Italian Trulli" width=100px height=100px></img></center>`
+            var tableObj=[];
+            var faceTable=document.getElementById("myTable");
+            faceTable.innerHTML+="<tr id='row"+count+"'></tr>";
+            for(j=0;j<num_candidate+1;j++){
+                  if(j == 0){
+                    // document.getElementById("row"+count).innerHTML+="<td style='width:80px;height:80px;' id='r"+count+"c"+j+"' >"+ crop_img +  " <br><p>"+ `${item.portrait_linkfile}` +"</p></br>"+ tag_check + " </td>";
+                    document.getElementById("row"+count).innerHTML+="<td style='width:100px;height:100px;' id='r"+count+"c"+j+"'>"+ "<center><p><b> Detected </b></p></center><br>" +crop_img +  " <br><center><p> "+ item +". " +`${data[item].portrait_linkfile}` +"</p></center>"+ tag_check + " </td>";
+                  }else{
+                    // var img = `<center><img class="lazy" data-src="report/member/${item.candidate[j-1].member_id}.jpg" alt="Italian Trulli" width=100px height=100px></img></center>`
+                    var img = `<center><img class="lazy" data-src="report/member/${data[item].candidate[j-1].member_id}.png" alt="Italian Trulli" width=100px height=100px></img></center>`
+                    var distance =  `${data[item].candidate[j-1].score}`;
+                    // document.getElementById("row"+count).innerHTML+="<td style='width:80px;height:80px;' id='r"+count+"c"+j+"' >"+ img + " <br><center><p>"+ distance +" % </p></center></br>" + "<p>"+ `${item.candidate[j-1].member_id}` + "</p>" +"</td>";
+                    // document.getElementById("row"+count).innerHTML+="<td style='width:100px;height:100px;' id='r"+count+"c"+j+"' >"+ + "<center><p> C-"+ j +"</p></center><br>" + img + " <br><center><p>"+ distance +" % </p></center></br>" + "<p>"+ `${data[item].candidate[j-1].member_id}` + "</p>" +"</td>";
+                    document.getElementById("row"+count).innerHTML+="<td style='width:100px;height:100px;' id='r"+count+"c"+j+"' >"+ "<center><p><b> C-"+ j +"</b></p></center><br>" +img + " <br><center><p>"+ distance +" % </p></center></br>" + "</td>";
+                  }       
+            }
+            count++;
+
+      }
+        // Display
+        dis_found = count;
+        document.getElementById("recog").innerHTML = dis_found;
+        count = 0;
+        
+
+           // ------ Check_box Click Event True --------
+        document.getElementsByName("employee").forEach(element => {
+                    element.addEventListener("click", (event) => {
+                        var count = getCountOnMe(document.getElementsByName("employee"));
+                        // console.log(count)
+                        // document.getElementById("total").value = count;
+                        document.getElementById("true_data").innerHTML = count;
+                        t_count = count;
+                        // document.getElementById("accuracy").value = (t_count/(t_count + f_count)*100);
+                        document.getElementById("acc_data").innerHTML = (t_count/(t_count + f_count)*100);
+                    });
+                });
+                
+                function getCountOnMe(elements) {
+                    var count = 0;
+                    elements.forEach(el => {
+                        if(el.checked) {
+                            count = count + 1;
+                            
+                        }
+                    });
+                    return count;
+        }
+
+
+        // ------ Check_box Click Event False --------
+        document.getElementsByName("false").forEach(element => {
+          element.addEventListener("click", (event) => {
+            var count2 = getCountOnMe2(document.getElementsByName("false"));
+            // console.log(count)
+            // document.getElementById("total2").value = count2;
+            document.getElementById("false_data").innerHTML = count2;
+            f_count = count2;
+            // document.getElementById("accuracy").value = (t_count/(t_count + f_count)*100);
+            document.getElementById("acc_data").innerHTML = (t_count/(t_count + f_count)*100);
+          });
+        });
+
+          function getCountOnMe2(elements) {
+            var count3 = 0;
+            elements.forEach(el => {
+              if (el.checked) {
+                count3 = count3 + 1;
+              }
+            });
+            return count3;
+        }
+
+
+
+    (function () {
+      function logElementEvent(eventName, element) {
+        console.log(Date.now(), eventName, element.getAttribute("data-src"));
+      }
+
+      var callback_enter = function (element) {
+        logElementEvent("🔑 ENTERED", element);
+      };
+      var callback_exit = function (element) {
+        logElementEvent("🚪 EXITED", element);
+      };
+      var callback_loading = function (element) {
+        logElementEvent("⌚ LOADING", element);
+      };
+      var callback_loaded = function (element) {
+        logElementEvent("👍 LOADED", element);
+      };
+      var callback_error = function (element) {
+        logElementEvent("💀 ERROR", element);
+        element.src = "https://via.placeholder.com/440x560/?text=Error+Placeholder";
+      };
+      var callback_finish = function () {
+        logElementEvent("✔️ FINISHED", document.documentElement);
+      };
+
+      var ll = new LazyLoad({
+        elements_selector: ".lazy",
+        // Assign the callbacks defined above
+        callback_enter: callback_enter,
+        callback_exit: callback_exit,
+        callback_loading: callback_loading,
+        callback_loaded: callback_loaded,
+        callback_error: callback_error,
+        callback_finish: callback_finish
+      });
+    })();
+
+
+
+    $('input[name="employee"]').on('change', function() {
+      $(this).closest('tr').toggleClass('yellow', $(this).is(':checked'));
+    });
+
+
+
+    } // end Function Increase
+
+    
+
+    function myFunction() {
+      var value5 = parseInt(document.getElementById('start_range').value);
+      var value6 = parseInt(document.getElementById('stop_range').value);
+      var ranges = value6 - value5;
+
+      // document.getElementById("found").value = 0;
+      document.getElementById("recog").innerHTML = 0;
+      document.getElementById("true_data").innerHTML = 0;
+      document.getElementById("false_data").innerHTML = 0;
+      document.getElementById("acc_data").innerHTML = 0;
+      dis_found = 0;
+
+
+      for(var item = 0; item<data.length && item < ranges; item++){
+          console.log(item)
+          document.getElementById("myTable").deleteRow(0);
+      }
+        
+
+    }
+
+
+  </script>
+
+
+
+
+<script>
+  window.lazyLoadOptions = {
+    elements_selector: '.lazy'
+  }
+</script>
+
+
+
+
+</body>
+
+</html>
